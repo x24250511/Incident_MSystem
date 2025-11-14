@@ -1,0 +1,21 @@
+<!-- incidents/templates/incidents/close_incident.html -->
+{% extends "incidents/base.html" %}
+{% block content %}
+
+<h2>Close incident #{{ incident.id }}</h2>
+
+<p><strong>{{ incident.title }}</strong></p>
+<p>{{ incident.description }}</p>
+
+<p>
+    Closing this incident will remove it from the user and support dashboards,
+    but it will remain visible to admins.
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn">Yes, close incident</button>
+    <a href="{% url 'support_dashboard' %}" class="btn secondary">Cancel</a>
+</form>
+
+{% endblock %}

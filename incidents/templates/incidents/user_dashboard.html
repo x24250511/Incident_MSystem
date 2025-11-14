@@ -1,0 +1,400 @@
+<!-- incidents/templates/incidents/user_dashboard.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Support Portal - My Incidents</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem 0;
+        }
+
+        .portal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .portal-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .portal-header h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .portal-header p {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .user-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            background: white;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.25rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+            border: none;
+            padding: 0.875rem 2rem;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .severity-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .severity-CRITICAL {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #dc2626;
+        }
+
+        .severity-HIGH {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+        }
+
+        .severity-MEDIUM {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+        }
+
+        .severity-LOW {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-OPEN {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-IN_PROGRESS {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-RESOLVED {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .incident-card {
+            padding: 1.5rem;
+            border: 2px solid #f1f5f9;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .incident-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .help-text {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .severity-info {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .severity-info-item {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="portal-container">
+        <!-- Header -->
+        <div class="portal-header">
+            <h1><i class="bi bi-headset"></i> IT Support Portal</h1>
+            <p>Report technical issues and track your incidents</p>
+
+            <div class="user-info">
+                <i class="bi bi-person-circle"></i>
+                <span>
+                    {% if user.first_name or user.last_name %}
+                    {{ user.first_name }} {{ user.last_name }}
+                    {% else %}
+                    {{ user.username }}
+                    {% endif %}
+                </span>
+            </div>
+
+            <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger mt-2">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+
+        <!-- Messages -->
+        {% if messages %}
+        <div class="mb-3">
+            {% for m in messages %}
+            <div class="alert alert-info">
+                {{ m }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Report Incident Form -->
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-plus-circle"></i> Report New Incident
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'create_incident' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="incidentTitle" class="form-label">
+                            Issue Title <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="incidentTitle" name="title"
+                            placeholder="Brief summary of the issue" required minlength="5">
+                        <small class="text-muted">Minimum 5 characters</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="incidentDescription" class="form-label">
+                            Detailed Description <span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control" id="incidentDescription" name="description" rows="5"
+                            placeholder="What were you trying to do? What happened instead? Any error messages? When did this start?"
+                            required minlength="10"></textarea>
+                        <small class="text-muted">
+                            Minimum 10 characters. The more details you provide, the faster we can help.
+                        </small>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="incidentSeverity" class="form-label">
+                                Impact Level <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="incidentSeverity" name="severity" required>
+                                <option value="">Choose impact level...</option>
+                                <option value="CRITICAL">🔴 Critical - Work completely blocked</option>
+                                <option value="HIGH">🟠 High - Significant impact on work</option>
+                                <option value="MEDIUM">🟡 Medium - Some impact but can continue</option>
+                                <option value="LOW">🟢 Low - Minor inconvenience</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Attachment (optional)
+                            </label>
+                            <input type="file" name="attachment" class="form-control">
+                            <small class="text-muted">Screenshot or log file if available.</small>
+                        </div>
+                    </div>
+
+                    <div class="help-text">
+                        <h6><i class="bi bi-info-circle"></i> How to choose the right impact level</h6>
+                        <div class="severity-info">
+                            <div class="severity-info-item">
+                                <strong>🔴 Critical:</strong> System down, cannot work at all.
+                            </div>
+                            <div class="severity-info-item">
+                                <strong>🟠 High:</strong> Major feature broken, affecting multiple users.
+                            </div>
+                            <div class="severity-info-item">
+                                <strong>🟡 Medium:</strong> Issue present but workaround available.
+                            </div>
+                            <div class="severity-info-item">
+                                <strong>🟢 Low:</strong> Minor issue, enhancement request.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-send"></i> Submit Incident Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- My Incidents -->
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-list-check"></i> My Reported Incidents
+                <a class="btn btn-sm btn-light float-end" href="{% url 'user_dashboard' %}">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                </a>
+            </div>
+            <div class="card-body">
+                {% if incidents %}
+                {% for incident in incidents %}
+                <div class="incident-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <h5 class="mb-2">
+                                <a href="{% url 'incident_detail' incident.id %}"
+                                    style="text-decoration:none;color:inherit;">
+                                    {{ incident.title }}
+                                </a>
+                            </h5>
+                            <p class="text-muted mb-2 small">
+                                <i class="bi bi-calendar"></i>
+                                Reported: {{ incident.created_at|date:"Y-m-d H:i" }}
+                            </p>
+                            <p class="text-muted mb-0 small">
+                                <i class="bi bi-person-workspace"></i>
+                                Assigned to:
+                                <strong>
+                                    {% if incident.assigned_to %}
+                                    {{ incident.assigned_to.username }}
+                                    {% else %}
+                                    Waiting for assignment
+                                    {% endif %}
+                                </strong>
+                            </p>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="severity-badge severity-{{ incident.severity }}">
+                                {{ incident.severity }}
+                            </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <span class="status-badge status-{{ incident.status }}">
+                                {{ incident.get_status_display }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-check-circle"></i>
+                    <h4>No Incidents Reported</h4>
+                    <p>You haven't reported any incidents yet. Use the form above if you need IT support.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

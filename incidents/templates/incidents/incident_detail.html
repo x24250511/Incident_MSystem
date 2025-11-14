@@ -1,0 +1,47 @@
+<!-- incidents/templates/incidents/incident_detail.html -->
+{% extends "incidents/base.html" %}
+{% block content %}
+
+<h2>Incident #{{ incident.id }} – {{ incident.title }}</h2>
+
+<p><strong>Status:</strong> {{ incident.get_status_display }}</p>
+<p><strong>Severity:</strong> {{ incident.get_severity_display }}</p>
+<p><strong>Created by:</strong> {{ incident.created_by }}</p>
+<p><strong>Assigned to:</strong> {{ incident.assigned_to|default:"(unassigned)" }}</p>
+<p><strong>Created:</strong> {{ incident.created_at|date:"Y-m-d H:i" }}</p>
+
+<p><strong>Description:</strong><br>{{ incident.description }}</p>
+
+{% if incident.attachment %}
+<p><strong>Attachment:</strong>
+    <a href="{{ incident.attachment.url }}">Download</a>
+</p>
+{% endif %}
+
+<hr>
+
+<h3>Comments</h3>
+
+{% if comments %}
+<ul>
+    {% for c in comments %}
+    <li>
+        <strong>{{ c.author }}</strong> ({{ c.created_at|date:"Y-m-d H:i" }}):<br>
+        {{ c.text }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No comments yet.</p>
+{% endif %}
+
+<hr>
+
+<h3>Add comment</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Add comment</button>
+</form>
+
+{% endblock %}
