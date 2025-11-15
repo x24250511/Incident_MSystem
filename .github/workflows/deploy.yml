@@ -64,6 +64,8 @@ jobs:
           overwrite: true
           timeout: "60s"
           command_timeout: "60s"
+          strip_components: 0
+          exclude: ".git/*"
 
       - name: Run deployment commands on EC2
         uses: appleboy/ssh-action@v0.1.7
