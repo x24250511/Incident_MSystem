@@ -59,17 +59,19 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: |
-            Incident_MSystem
-            incidents
-            templates
-            requirements.txt
-            manage.py
+          port: 22
+          source: "Incident_MSystem,incidents,templates,requirements.txt,manage.py"
           target: ${{ secrets.EC2_PATH }}
           overwrite: true
+          rm: false
           timeout: "60s"
           command_timeout: "60s"
           strip_components: 0
+          use_insecure_cipher: false
+          proxy_port: 22
+          proxy_timeout: "30s"
+          proxy_use_insecure_cipher: false
+
           
 
       - name: Run deployment commands on EC2
