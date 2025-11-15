@@ -59,13 +59,18 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "."
+          source: |
+            Incident_MSystem
+            incidents
+            templates
+            requirements.txt
+            manage.py
           target: ${{ secrets.EC2_PATH }}
           overwrite: true
           timeout: "60s"
           command_timeout: "60s"
           strip_components: 0
-          exclude: ".git/*"
+          #exclude: ".git/*"
 
       - name: Run deployment commands on EC2
         uses: appleboy/ssh-action@v0.1.7
