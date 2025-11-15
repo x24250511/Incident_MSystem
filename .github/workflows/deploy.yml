@@ -8,7 +8,6 @@ permissions:
   contents: read
 
 env:
-  # Never print secrets in logs
   PYTHONUNBUFFERED: "1"
 
 jobs:
@@ -50,7 +49,7 @@ jobs:
 
   deploy:
     name: Deploy to EC2
-    needs: security          # Only run if security job passes
+    needs: security        
     runs-on: ubuntu-latest
 
     steps:
