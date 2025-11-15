@@ -1,0 +1,10 @@
+[flake8]
+exclude = 
+    migrations,
+    venv,
+    manage.py
+ignore = 
+    E501,
+    F401
+max-line-length = 119
+
