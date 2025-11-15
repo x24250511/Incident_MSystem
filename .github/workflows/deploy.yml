@@ -62,8 +62,8 @@ jobs:
           source: "."
           target: ${{ secrets.EC2_PATH }}
           overwrite: true
-          timeout: 60
-          command_timeout: 60
+          timeout: "60s"
+          command_timeout: "60s"
 
       - name: Run deployment commands on EC2
         uses: appleboy/ssh-action@v0.1.7
@@ -71,27 +71,14 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          timeout: "60s"
+          command_timeoout: "60s"
           script: |
-            set -e
-
-            # Make sure Django can read the SECRET_KEY
             export DJANGO_SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}"
-
             cd ${{ secrets.EC2_PATH }}
-
-            # Activate virtualenv
             source venv/bin/activate
-
-            # Install/upgrade dependencies
-            pip install --upgrade pip
             pip install -r requirements.txt
-
-            # Run migrations if you want this automated
-            # python manage.py migrate --noinput
-
-            # Collect static files
             python manage.py collectstatic --noinput
-
-            # Restart services
             sudo systemctl restart gunicorn
             sudo systemctl restart nginx
+
