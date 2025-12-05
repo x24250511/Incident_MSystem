@@ -58,6 +58,11 @@ class Incident(models.Model):
     def __str__(self) -> str:
         return f"{self.title} ({self.get_status_display()})"
 
+    @property
+    def image(self):
+        """Alias for attachment so legacy template/code using `.image` still works."""
+        return self.attachment
+
 
 class IncidentComment(models.Model):
     incident = models.ForeignKey(
