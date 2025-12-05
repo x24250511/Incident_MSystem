@@ -11,6 +11,40 @@ env:
   PYTHONUNBUFFERED: "1"
 
 jobs:
+  sonarcloud:
+    name: SonarCloud Security Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Disable shallow clone for better analysis
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+          pip install coverage
+
+      - name: Run tests with coverage
+        run: |
+          coverage run --source='incidents' manage.py test
+          coverage xml -o coverage.xml
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   security:
     name: Security & Quality Checks
     runs-on: ubuntu-latest
