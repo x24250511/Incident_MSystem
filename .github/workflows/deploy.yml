@@ -9,6 +9,7 @@ permissions:
 
 env:
   PYTHONUNBUFFERED: "1"
+  DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
 
 jobs:
   sonarcloud:
