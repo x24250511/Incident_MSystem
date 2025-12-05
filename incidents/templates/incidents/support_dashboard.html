@@ -123,6 +123,15 @@
         font-weight: 600;
         color: #111827;
     }
+
+    .attachment-thumb {
+        display: block;
+        margin-top: 6px;
+        max-height: 80px;
+        max-width: 120px;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+    }
 </style>
 
 <h2 style="margin-bottom: 20px;">Support Dashboard</h2>
@@ -185,7 +194,7 @@
         <td>
             {% if inc.attachment %}
             <a href="{{ inc.attachment.url }}" target="_blank" rel="noopener" class="btn-sm btn-grey">View</a>
-            <img src="{{ inc.attachment.url }}" alt="Attachment preview" style="display:block; margin-top:6px; max-height:70px; border-radius:6px; border:1px solid #e5e7eb;" onerror="this.style.display='none';">
+            <img src="{{ inc.attachment.url }}" alt="Attachment preview" class="attachment-thumb" onerror="this.style.display='none';">
             {% else %}
             <em>None</em>
             {% endif %}
