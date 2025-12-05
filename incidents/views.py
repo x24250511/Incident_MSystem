@@ -201,6 +201,10 @@ def create_incident(request):
             incident.status = "OPEN"
             incident.save()
             messages.success(request, "Incident created.")
+            if is_admin_user(request.user):
+                return redirect("admin_dashboard")
+            if is_support_user(request.user):
+                return redirect("support_dashboard")
             return redirect("user_dashboard")
     else:
         form = IncidentForm()
