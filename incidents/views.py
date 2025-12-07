@@ -17,34 +17,32 @@ def is_admin_user(user) -> bool:
     return user.is_authenticated and user.is_superuser
 
 
-@login_required
-def login_redirect(request):
-    """After login, send user to the right dashboard based on role."""
-    user = request.user
+def is_support_or_admin(user) -> bool:
+    return is_support_user(user) or is_admin_user(user)
 
+
+@login_required
+def login_redirect(request):  # Redirect based on role
+    user = request.user
     if user.is_superuser:
         return redirect("admin_dashboard")
-
     if is_support_user(user):
         return redirect("support_dashboard")
-
     return redirect("user_dashboard")
 
 
 @login_required
-def logout_view(request):
-    """Simple logout view that works with GET or POST."""
+def logout_view(request):   # Logout and redirect to login
     logout(request)
     return redirect("login")
 
 
 @login_required
-def user_dashboard(request):
-    """User-facing portal: report incident + list own incidents."""
-    incidents = Incident.objects.filter(
+def user_dashboard(request):     # User-facing portal: report incident + list own incidents
+    incidents = Incident.objects.filter(    # Only incidents created by this user and visible
         created_by=request.user,
         is_visible_to_user=True,
-    ).order_by("-created_at")
+    ).order_by("-created_at")   # Most recent first
 
     return render(
         request,
@@ -54,37 +52,37 @@ def user_dashboard(request):
 
 
 @login_required
-@user_passes_test(is_support_user)
+@user_passes_test(is_support_or_admin)
 def support_dashboard(request):
     # Only incidents assigned to the logged-in support user
-    incidents = Incident.objects.filter(
+    incidents = Incident.objects.filter(    # Only assigned and visible to support
         assigned_to=request.user,
         is_visible_to_support=True,
     ).order_by("-created_at")
 
     # Simple metrics for this support user
-    total_incidents = incidents.count()
-    critical_count = incidents.filter(severity="CRITICAL").count()
-    open_count = incidents.filter(status="OPEN").count()
-    resolved_count = incidents.filter(status="RESOLVED").count()
+    total_incidents = incidents.count()   # Total assigned incidents
+    critical_count = incidents.filter(severity="CRITICAL").count()   # Critical severity incidents
+    open_count = incidents.filter(status="OPEN").count()   # Open status incidents
+    resolved_count = incidents.filter(status="RESOLVED").count()   # Resolved status incidents
 
     # Handle close from support dashboard
     if request.method == "POST":
-        incident_id = request.POST.get("incident_id")
+        incident_id = request.POST.get("incident_id")  # ID of incident to close
         action = request.POST.get("action")
 
-        incident = get_object_or_404(
-            Incident, pk=incident_id, assigned_to=request.user)
+        incident = get_object_or_404(   # Ensure incident belongs to this support user
+            Incident, pk=incident_id, assigned_to=request.user)  # Only assigned and visible to support
 
-        if action == "close":
-            incident.status = "RESOLVED"
+        if action == "close":  # Close action
+            incident.status = "RESOLVED"  # Set status to RESOLVED
             incident.is_visible_to_user = False
             incident.is_visible_to_support = False
             incident.save()
-            messages.success(request, "Incident closed.")
+            messages.success(request, "Incident closed.")  # Success message
             return redirect("support_dashboard")
 
-    return render(
+    return render(  # Render support dashboard template
         request,
         "incidents/support_dashboard.html",
         {
@@ -98,7 +96,7 @@ def support_dashboard(request):
 
 
 @login_required
-@user_passes_test(is_admin_user)
+@user_passes_test(is_admin_user)    # Admin view of incidents assigned to self
 def admin_my_incidents(request):
     incidents = Incident.objects.filter(
         assigned_to=request.user
@@ -113,20 +111,20 @@ def admin_my_incidents(request):
 
 @login_required
 @user_passes_test(is_admin_user)
-def admin_dashboard(request):
+def admin_dashboard(request):   # Admin overview of all incidents with inline update
     # Handle inline updates
     if request.method == "POST":
         incident_id = request.POST.get("incident_id")
         action = request.POST.get("action")
 
-        incident = get_object_or_404(Incident, pk=incident_id)
+        incident = get_object_or_404(Incident, pk=incident_id)  # Admin can access all incidents
 
         # UPDATE (Assign + Status)
         if action == "update":
             assigned_to_id = request.POST.get("assigned_to")
             status = request.POST.get("status")
 
-            # ❗ Assignment LOCK: only assign if NONE
+            #  Assignment LOCK: only assign if NONE
             if incident.assigned_to is None:
                 if assigned_to_id:
                     assigned_user = get_object_or_404(User, id=assigned_to_id)
@@ -191,8 +189,7 @@ def admin_dashboard(request):
 
 
 @login_required
-def create_incident(request):
-    """Handle incident creation from user portal + any other form."""
+def create_incident(request):    # Handle incident creation form submission
     if request.method == "POST":
         form = IncidentForm(request.POST, request.FILES)
         if form.is_valid():

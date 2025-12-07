@@ -4,38 +4,38 @@ from django.db import models
 
 
 class Incident(models.Model):
-    STATUS_CHOICES = [
+    STATUS_CHOICES = [  # Status of the incident
         ("OPEN", "Open"),
         ("IN_PROGRESS", "In progress"),
         ("RESOLVED", "Resolved"),
     ]
 
-    SEVERITY_CHOICES = [
+    SEVERITY_CHOICES = [    # Severity levels
         ("CRITICAL", "Critical"),
         ("HIGH", "High"),
         ("MEDIUM", "Medium"),
         ("LOW", "Low"),
     ]
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)  # Short title of the incident
     description = models.TextField()
     severity = models.CharField(
         max_length=10,
         choices=SEVERITY_CHOICES,
         default="LOW",
     )
-    status = models.CharField(
+    status = models.CharField(  # Status of the incident
         max_length=20,
         choices=STATUS_CHOICES,
         default="OPEN",
     )
 
-    created_by = models.ForeignKey(
+    created_by = models.ForeignKey(     # User who created the incident
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="incidents_created",
     )
-    assigned_to = models.ForeignKey(
+    assigned_to = models.ForeignKey(  # User assigned to handle the incident
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
@@ -46,7 +46,7 @@ class Incident(models.Model):
     is_visible_to_user = models.BooleanField(default=True)
     is_visible_to_support = models.BooleanField(default=True)
 
-    attachment = models.FileField(
+    attachment = models.FileField(  # Optional attachment for the incident
         upload_to="attachments/",
         blank=True,
         null=True,
@@ -59,12 +59,11 @@ class Incident(models.Model):
         return f"{self.title} ({self.get_status_display()})"
 
     @property
-    def image(self):
-        """Alias for attachment so legacy template/code using `.image` still works."""
+    def image(self):  # Return attachment if it's an image
         return self.attachment
 
 
-class IncidentComment(models.Model):
+class IncidentComment(models.Model):  # Comments on incidents
     incident = models.ForeignKey(
         Incident,
         on_delete=models.CASCADE,
@@ -77,5 +76,5 @@ class IncidentComment(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # String representation of the comment
         return f"Comment by {self.author} on {self.incident}"

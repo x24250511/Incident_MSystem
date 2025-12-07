@@ -149,6 +149,35 @@
             border: 2px solid #10b981;
         }
 
+        .severity-info {
+            margin-top: 12px;
+            font-size: 0.95rem;
+        }
+
+        .severity-info-item {
+            padding: 8px 12px;
+            border-left: 5px solid;
+            background: #f9f9f9;
+            margin-bottom: 6px;
+            border-radius: 4px;
+        }
+
+        .severity-info-item.severity-critical strong {
+            color: #d32f2f;
+        }
+
+        .severity-info-item.severity-high strong {
+            color: #f57c00;
+        }
+
+        .severity-info-item.severity-medium strong {
+            color: #fbc02d;
+        }
+
+        .severity-info-item.severity-low strong {
+            color: #388e3c;
+        }
+
         .status-badge {
             font-size: 0.75rem;
             padding: 0.35rem 0.75rem;
@@ -271,7 +300,7 @@
                             Issue Title <span class="text-danger">*</span>
                         </label>
                         <input type="text" class="form-control" id="incidentTitle" name="title"
-                            placeholder="Brief summary of the issue" required minlength="5">
+                            placeholder="Brief summary" required minlength="5">
                         <small class="text-muted">Minimum 5 characters</small>
                     </div>
 
@@ -280,10 +309,10 @@
                             Detailed Description <span class="text-danger">*</span>
                         </label>
                         <textarea class="form-control" id="incidentDescription" name="description" rows="5"
-                            placeholder="What were you trying to do? What happened instead? Any error messages? When did this start?"
-                            required minlength="10"></textarea>
+                            placeholder="What were you trying to do? Any error messages?" required
+                            minlength="10"></textarea>
                         <small class="text-muted">
-                            Minimum 10 characters. The more details you provide, the faster we can help.
+                            Minimum 10 characters.
                         </small>
                     </div>
 
@@ -294,10 +323,11 @@
                             </label>
                             <select class="form-select" id="incidentSeverity" name="severity" required>
                                 <option value="">Choose impact level...</option>
-                                <option value="CRITICAL">🔴 Critical - Work completely blocked</option>
-                                <option value="HIGH">🟠 High - Significant impact on work</option>
-                                <option value="MEDIUM">🟡 Medium - Some impact but can continue</option>
-                                <option value="LOW">🟢 Low - Minor inconvenience</option>
+                                <option value="CRITICAL">Critical - Work
+                                    completely blocked</option>
+                                <option value="HIGH">High - Significant impact on work</option>
+                                <option value="MEDIUM">Medium - Some impact but can continue</option>
+                                <option value="LOW">Low - Minor inconvenience</option>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -312,17 +342,17 @@
                     <div class="help-text">
                         <h6><i class="bi bi-info-circle"></i> How to choose the right impact level</h6>
                         <div class="severity-info">
-                            <div class="severity-info-item">
-                                <strong>🔴 Critical:</strong> System down, cannot work at all.
+                            <div class="severity-info-item severity-critical">
+                                <strong>Critical:</strong> System down, cannot work at all.
                             </div>
-                            <div class="severity-info-item">
-                                <strong>🟠 High:</strong> Major feature broken, affecting multiple users.
+                            <div class="severity-info-item severity-high">
+                                <strong>High:</strong> Major feature broken, affecting multiple users.
                             </div>
-                            <div class="severity-info-item">
-                                <strong>🟡 Medium:</strong> Issue present but workaround available.
+                            <div class="severity-info-item severity-medium">
+                                <strong>Medium:</strong> Issue present but workaround available.
                             </div>
-                            <div class="severity-info-item">
-                                <strong>🟢 Low:</strong> Minor issue, enhancement request.
+                            <div class="severity-info-item severity-low">
+                                <strong>Low:</strong> Minor issue, enhancement request.
                             </div>
                         </div>
                     </div>

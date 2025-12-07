@@ -4,7 +4,7 @@ from .models import Incident, IncidentComment
 
 
 @admin.register(Incident)
-class IncidentAdmin(admin.ModelAdmin):
+class IncidentAdmin(admin.ModelAdmin):      # Register Incident model in admin
     list_display = (
         "id",
         "title",
@@ -16,13 +16,13 @@ class IncidentAdmin(admin.ModelAdmin):
         "is_visible_to_support",
         "created_at",
     )
-    list_filter = ("status", "severity", "is_visible_to_user",
+    list_filter = ("status", "severity", "is_visible_to_user",  # Filters for admin list view
                    "is_visible_to_support")
     search_fields = ("title", "description",
                      "created_by__username", "assigned_to__username")
 
 
 @admin.register(IncidentComment)
-class IncidentCommentAdmin(admin.ModelAdmin):
+class IncidentCommentAdmin(admin.ModelAdmin):  # Register IncidentComment model in admin
     list_display = ("id", "incident", "author", "created_at")
     search_fields = ("text", "author__username", "incident__title")

@@ -112,9 +112,7 @@
 
                 {% if is_admin %}
                 <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
-                <a href="{% url 'support_dashboard' %}">
-                    My Tasks
-                </a>
+                <a href="{% url 'admin_my_incidents' %}">My Tasks</a>
                 {% elif is_support %}
                 <a href="{% url 'support_dashboard' %}">
                     Assigned to Me

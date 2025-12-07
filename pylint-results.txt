@@ -1,0 +1,78 @@
+************* Module incidents.models
+incidents/models.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/models.py:6:0: C0115: Missing class docstring (missing-class-docstring)
+incidents/models.py:59:32: E1101: Instance of 'Incident' has no 'get_status_display' member (no-member)
+incidents/models.py:67:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module incidents.apps
+incidents/apps.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/apps.py:4:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module incidents.forms
+incidents/forms.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/forms.py:6:0: C0115: Missing class docstring (missing-class-docstring)
+incidents/forms.py:7:4: C0115: Missing class docstring (missing-class-docstring)
+incidents/forms.py:7:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+incidents/forms.py:12:0: C0115: Missing class docstring (missing-class-docstring)
+incidents/forms.py:13:4: C0115: Missing class docstring (missing-class-docstring)
+incidents/forms.py:13:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module incidents.context_processors
+incidents/context_processors.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/context_processors.py:4:0: C0116: Missing function or method docstring (missing-function-docstring)
+incidents/context_processors.py:13:25: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/context_processors.py:14:27: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/context_processors.py:18:25: E1101: Class 'Incident' has no 'objects' member (no-member)
+************* Module incidents.admin
+incidents/admin.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/admin.py:7:0: C0115: Missing class docstring (missing-class-docstring)
+incidents/admin.py:26:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module incidents.tests
+incidents/tests.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/tests.py:1:0: W0611: Unused TestCase imported from django.test (unused-import)
+************* Module incidents.urls
+incidents/urls.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module incidents.views
+incidents/views.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/views.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+incidents/views.py:16:0: C0116: Missing function or method docstring (missing-function-docstring)
+incidents/views.py:20:0: C0116: Missing function or method docstring (missing-function-docstring)
+incidents/views.py:48:16: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/views.py:62:0: C0116: Missing function or method docstring (missing-function-docstring)
+incidents/views.py:64:16: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/views.py:106:0: C0116: Missing function or method docstring (missing-function-docstring)
+incidents/views.py:107:16: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/views.py:120:0: C0116: Missing function or method docstring (missing-function-docstring)
+incidents/views.py:166:16: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/views.py:174:22: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/views.py:175:21: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/views.py:176:17: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/views.py:177:21: E1101: Class 'Incident' has no 'objects' member (no-member)
+incidents/views.py:225:0: C0116: Missing function or method docstring (missing-function-docstring)
+incidents/views.py:265:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module incidents.migrations.0004_alter_incident_severity
+incidents/migrations/0004_alter_incident_severity.py:16:0: C0301: Line too long (157/100) (line-too-long)
+incidents/migrations/0004_alter_incident_severity.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/migrations/0004_alter_incident_severity.py:1:0: C0103: Module name "0004_alter_incident_severity" doesn't conform to snake_case naming style (invalid-name)
+incidents/migrations/0004_alter_incident_severity.py:6:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module incidents.migrations.0002_incidentcomment
+incidents/migrations/0002_incidentcomment.py:19:0: C0301: Line too long (117/100) (line-too-long)
+incidents/migrations/0002_incidentcomment.py:22:0: C0301: Line too long (120/100) (line-too-long)
+incidents/migrations/0002_incidentcomment.py:23:0: C0301: Line too long (143/100) (line-too-long)
+incidents/migrations/0002_incidentcomment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/migrations/0002_incidentcomment.py:1:0: C0103: Module name "0002_incidentcomment" doesn't conform to snake_case naming style (invalid-name)
+incidents/migrations/0002_incidentcomment.py:8:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module incidents.migrations.0001_initial
+incidents/migrations/0001_initial.py:20:0: C0301: Line too long (117/100) (line-too-long)
+incidents/migrations/0001_initial.py:23:0: C0301: Line too long (143/100) (line-too-long)
+incidents/migrations/0001_initial.py:24:0: C0301: Line too long (162/100) (line-too-long)
+incidents/migrations/0001_initial.py:29:0: C0301: Line too long (184/100) (line-too-long)
+incidents/migrations/0001_initial.py:30:0: C0301: Line too long (158/100) (line-too-long)
+incidents/migrations/0001_initial.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/migrations/0001_initial.py:1:0: C0103: Module name "0001_initial" doesn't conform to snake_case naming style (invalid-name)
+incidents/migrations/0001_initial.py:8:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module incidents.migrations.0003_incident_attachment
+incidents/migrations/0003_incident_attachment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+incidents/migrations/0003_incident_attachment.py:1:0: C0103: Module name "0003_incident_attachment" doesn't conform to snake_case naming style (invalid-name)
+incidents/migrations/0003_incident_attachment.py:6:0: C0115: Missing class docstring (missing-class-docstring)
+
+-----------------------------------
+Your code has been rated at 5.15/10
+

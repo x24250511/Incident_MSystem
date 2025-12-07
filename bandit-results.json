@@ -1,0 +1,155 @@
+{
+  "errors": [
+    {
+      "filename": "incidents/admin.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/apps.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/context_processors.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/forms.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/migrations/0001_initial.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/migrations/0002_incidentcomment.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/migrations/0003_incident_attachment.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/migrations/0004_alter_incident_severity.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/models.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/tests.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/urls.py",
+      "reason": "exception while scanning file"
+    },
+    {
+      "filename": "incidents/views.py",
+      "reason": "exception while scanning file"
+    }
+  ],
+  "generated_at": "2025-12-06T00:06:25Z",
+  "metrics": {
+    "_totals": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 574,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/admin.py": {
+      "loc": 23,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/apps.py": {
+      "loc": 4,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/context_processors.py": {
+      "loc": 23,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/forms.py": {
+      "loc": 13,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/migrations/0001_initial.py": {
+      "loc": 26,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/migrations/0002_incidentcomment.py": {
+      "loc": 20,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/migrations/0003_incident_attachment.py": {
+      "loc": 12,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/migrations/0004_alter_incident_severity.py": {
+      "loc": 12,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/migrations/__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/models.py": {
+      "loc": 67,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/tests.py": {
+      "loc": 144,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/urls.py": {
+      "loc": 10,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "incidents/views.py": {
+      "loc": 220,
+      "nosec": 0,
+      "skipped_tests": 0
+    }
+  },
+  "results": []
+}

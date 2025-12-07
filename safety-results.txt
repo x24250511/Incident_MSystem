@@ -1,0 +1,62 @@
+
+
++===========================================================================================================================================================================================+
+
+
+DEPRECATED: this command (`check`) has been DEPRECATED, and will be unsupported beyond 01 June 2024.
+
+
+We highly encourage switching to the new `scan` command which is easier to use, more powerful, and can be set up to mimic the deprecated command if required.
+
+
++===========================================================================================================================================================================================+
+
+
++==============================================================================+
+
+                                   /$$$$$$            /$$
+                                  /$$__  $$          | $$
+               /$$$$$$$  /$$$$$$ | $$  \__//$$$$$$  /$$$$$$   /$$   /$$
+              /$$_____/ |____  $$| $$$$   /$$__  $$|_  $$_/  | $$  | $$
+             |  $$$$$$   /$$$$$$$| $$_/  | $$$$$$$$  | $$    | $$  | $$
+              \____  $$ /$$__  $$| $$    | $$_____/  | $$ /$$| $$  | $$
+              /$$$$$$$/|  $$$$$$$| $$    |  $$$$$$$  |  $$$$/|  $$$$$$$
+             |_______/  \_______/|__/     \_______/   \___/   \____  $$
+                                                              /$$  | $$
+                                                             |  $$$$$$/
+      by safetycli.com                                        \______/
+
++==============================================================================+
+
+ REPORT 
+
+  Safety v3.7.0 is scanning for Vulnerabilities...
+  Scanning dependencies in your environment:
+
+  -> /Users/tejas/projects/Incident_MSystem/venv/lib/python3.14/site-packages
+
+  Using open-source vulnerability database
+  Found and scanned 57 packages
+  Timestamp 2025-12-06 00:04:48
+  0 vulnerabilities reported
+  0 vulnerabilities ignored
+
++==============================================================================+
+
+ No known security vulnerabilities found.
+
++==============================================================================+
+
+
++===========================================================================================================================================================================================+
+
+
+DEPRECATED: this command (`check`) has been DEPRECATED, and will be unsupported beyond 01 June 2024.
+
+
+We highly encourage switching to the new `scan` command which is easier to use, more powerful, and can be set up to mimic the deprecated command if required.
+
+
++===========================================================================================================================================================================================+
+
+

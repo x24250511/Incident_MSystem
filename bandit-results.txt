@@ -1,0 +1,34 @@
+Run started:2025-12-06 00:05:56.752640
+
+Test results:
+	No issues identified.
+
+Code scanned:
+	Total lines of code: 574
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+Files skipped (12):
+	incidents/admin.py (exception while scanning file)
+	incidents/apps.py (exception while scanning file)
+	incidents/context_processors.py (exception while scanning file)
+	incidents/forms.py (exception while scanning file)
+	incidents/migrations/0001_initial.py (exception while scanning file)
+	incidents/migrations/0002_incidentcomment.py (exception while scanning file)
+	incidents/migrations/0003_incident_attachment.py (exception while scanning file)
+	incidents/migrations/0004_alter_incident_severity.py (exception while scanning file)
+	incidents/models.py (exception while scanning file)
+	incidents/tests.py (exception while scanning file)
+	incidents/urls.py (exception while scanning file)
+	incidents/views.py (exception while scanning file)
