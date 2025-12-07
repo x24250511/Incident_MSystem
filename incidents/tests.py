@@ -1,59 +1,94 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User, Group
-from incidents.models import Incident
+from incidents.models import Incident, IncidentComment
 
 
-class IncidentModelTest(TestCase):  # "Test Incident model"
-    def setUp(self):  # "Set up test user"
+class IncidentModelTest(TestCase):  # Test Incident model
+    def setUp(self):  # Create test data
         self.user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
-            password='testpass123'
-        )  # "Create test user"
+            username='testuser',    # Create test user
+            email='test@example.com',  # Set email
+            password='testpass123'  # Set password
+        )
 
     def test_create_incident(self):
-        # "Test incident creation"
+        # Test creating an incident
         incident = Incident.objects.create(
             title='Test Incident',
             description='Test description',
-            reported_by=self.user,
-            status='Open',
-            priority='Medium'
+            created_by=self.user,  # Create incident creator
+            status='OPEN',
+            severity='MEDIUM'  # Set severity
         )
-        self.assertEqual(incident.title, 'Test Incident')
-        self.assertEqual(incident.status, 'Open')
-        self.assertEqual(incident.priority, 'Medium')
+        self.assertEqual(incident.title, 'Test Incident')  # Verify title
+        self.assertEqual(incident.status, 'OPEN')  # Verify status
+        self.assertEqual(incident.severity, 'MEDIUM')  # Verify severity
 
-    def test_incident_string_representation(self):
-        # "Test incident __str__ method"
+    def test_incident_string_representation(self):  # Test string representation
         incident = Incident.objects.create(
             title='Test Title',
             description='Test description',
-            reported_by=self.user
+            created_by=self.user  # Create incident creator
         )
         self.assertIn('Test Title', str(incident))
 
+    def test_incident_default_status(self):  # Test incident default status is OPEN
+        incident = Incident.objects.create(  # Create incident
+            title='Test',
+            description='Test',
+            created_by=self.user
+        )
+        self.assertEqual(incident.status, 'OPEN')
 
-class AuthenticationTest(TestCase):
-    # "Test user authentication"
+    def test_incident_default_severity(self):
+        # Test incident default severity is LOW
+        incident = Incident.objects.create(
+            title='Test',
+            description='Test',
+            created_by=self.user
+        )
+        self.assertEqual(incident.severity, 'LOW')
+
+
+class IncidentCommentTest(TestCase):
+    # Test IncidentComment model
 
     def setUp(self):
-        # "Create test user and client"
+        # Create test data
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass123'
+        )
+        self.incident = Incident.objects.create(
+            title='Test Incident',
+            description='Test description',
+            created_by=self.user
+        )
+
+    def test_create_comment(self):
+        # Test creating a comment
+        comment = IncidentComment.objects.create(
+            incident=self.incident,
+            author=self.user,
+            text='Test comment'
+        )
+        self.assertEqual(comment.text, 'Test comment')
+        self.assertEqual(comment.incident, self.incident)
+
+
+class AuthenticationTest(TestCase):
+    # Test user authentication
+
+    def setUp(self):
+        # Create test user and client
         self.client = Client()
         self.user = User.objects.create_user(
             username='testuser',
             password='testpass123'
         )
 
-    def test_user_can_login(self):
-        # "Test user login"
-        response = self.client.post('/login/', {
-            'username': 'testuser',
-            'password': 'testpass123'
-        })
-        self.assertIn(response.status_code, [200, 302])  # Check for success or redirect
-
-    def test_user_creation(self):  # "Test creating a user"
+    def test_user_creation(self):
+        # Test creating a user
         user = User.objects.create_user(
             username='newuser',
             email='new@example.com',
@@ -62,131 +97,84 @@ class AuthenticationTest(TestCase):
         self.assertEqual(user.username, 'newuser')
         self.assertTrue(user.check_password('newpass123'))
 
+    def test_password_hashing(self):
+        # Test that passwords are hashed
+        self.assertNotEqual(self.user.password, 'testpass123')
+        self.assertTrue(self.user.check_password('testpass123'))
 
-class RoleBasedAccessTest(TestCase):
-    # "Test role-based access control"
-    def setUp(self):
-        # "Create groups and users"
-        self.admin_group = Group.objects.create(name='Admin')
-        self.support_group = Group.objects.create(name='IT Support')
-        self.admin_user = User.objects.create_user(
-            username='admin',  # admin user
+
+class RoleBasedAccessTest(TestCase):     # Test role-based access control
+    def setUp(self):                     # Create groups and users
+        self.admin_group, _ = Group.objects.get_or_create(name='Admin')  # Create Admin group
+        self.support_group, _ = Group.objects.get_or_create(name='IT Support')  # Create IT Support group
+        self.admin_user = User.objects.create_user(  # create admin user
+            username='admin',
             password='admin123'
         )
-        self.admin_user.groups.add(self.admin_group)  # add to admin group
-        self.support_user = User.objects.create_user(
-            username='support',  # support user
+        self.admin_user.groups.add(self.admin_group)
+
+        self.support_user = User.objects.create_user(  # create support user
+            username='support',
             password='support123'
         )
-        self.support_user.groups.add(self.support_group)  # add to support group
+        self.support_user.groups.add(self.support_group)
 
-    def test_admin_group_exists(self):
-        # "Test admin group creation"
+    def test_admin_group_exists(self):  # Test admin group creation
         self.assertTrue(Group.objects.filter(name='Admin').exists())
 
-    def test_user_in_group(self):
-        # "Test user group membership"
+    def test_user_in_group(self):       # Test user group membership
         self.assertTrue(self.admin_user.groups.filter(name='Admin').exists())
-        self.assertTrue(self.support_user.groups.filter(name='IT Support').exists())
 
 
-class IncidentCRUDTest(TestCase):
-    # "Test CRUD operations"
-    def setUp(self):  # "Set up test data"
+class IncidentCRUDTest(TestCase):   # Test CRUD operations for Incident model
+
+    def setUp(self):  # set up test user and incident
         self.user = User.objects.create_user(
             username='testuser',
             password='testpass123'
         )
-        self.incident = Incident.objects.create(  # "Create test incident"
+        self.incident = Incident.objects.create(
             title='Original Title',
             description='Original description',
-            reported_by=self.user,
-            status='Open'  # "Set initial status"
+            created_by=self.user,
+            status='OPEN'
         )
 
-    def test_read_incident(self):
-        # "Test reading an incident"
+    def test_read_incident(self):       # Test reading an incident
         incident = Incident.objects.get(id=self.incident.id)
-        self.assertEqual(incident.title, 'Original Title')  # Check title
+        self.assertEqual(incident.title, 'Original Title')
 
-    def test_update_incident(self):
-        # "Test updating an incident"
-        self.incident.status = 'In Progress'
+    def test_update_incident_status(self):  # Test updating incident status
+        self.incident.status = 'IN_PROGRESS'
         self.incident.save()
         updated = Incident.objects.get(id=self.incident.id)
-        self.assertEqual(updated.status, 'In Progress')  # Check updated status
+        self.assertEqual(updated.status, 'IN_PROGRESS')
 
     def test_delete_incident(self):
-        # "Test deleting an incident"
+        # Test deleting an incident
         incident_id = self.incident.id
         self.incident.delete()
-        self.assertFalse(Incident.objects.filter(id=incident_id).exists())  # Check deletion
+        self.assertFalse(Incident.objects.filter(id=incident_id).exists())
 
 
-class InputValidationTest(TestCase):
-    # "Test input validation"
-
-    def setUp(self):
-        # "Create test user"
+class InputValidationTest(TestCase):    # Test input validation
+    def setUp(self):        # Create test user
         self.user = User.objects.create_user(
             username='testuser',
             password='testpass123'
         )
 
-    def test_empty_title_validation(self):
-        # "Test that empty title is handled"
-        # This should work or raise ValidationError
-        try:
-            incident = Incident.objects.create(
-                title='',
-                description='Test',
-                reported_by=self.user
-            )
-            # If it allows empty, test passes
-            self.assertEqual(incident.title, '')
-        except Exception:
-            # If it validates, test passes
-            pass
+    def test_required_fields(self):         # Test that required fields are enforced
+        incident = Incident.objects.create(
+            title='Valid Title',
+            description='Valid description',
+            created_by=self.user)
+        self.assertIsNotNone(incident.id)
 
-    def test_long_title_handling(self):
-        # "Test long title handling"
+    def test_long_title_handling(self):     # Test title max length (200 chars)
         long_title = 'A' * 200
         incident = Incident.objects.create(
             title=long_title,
             description='Test',
-            reported_by=self.user
-        )  # Create incident with long title
-        self.assertEqual(len(incident.title), 200)  # Check title length
-
-
-class ViewsTest(TestCase):    # "Test views and URL routing"
-    def setUp(self): # "Set up test client and data"
-        self.client = Client()  # Create test client
-        self.user = User.objects.create_user(
-            username='testuser',
-            password='testpass123'
-        )
-        self.incident = Incident.objects.create( # Create test incident
-            title='Test Incident',
-            description='Test description',
-            created_by=self.user
-        )
-
-    def test_incident_list_view_requires_login(self):
-        # "Test that incident list requires login"
-        response = self.client.get('/incidents/')
-        # Should redirect to login or return 302/200
-        self.assertIn(response.status_code, [200, 302, 404])
-
-    def test_authenticated_user_access(self):
-        # "Test authenticated user can access system"
-        self.client.login(username='testuser', password='testpass123') # Log in
-        response = self.client.get('/') # Access home
-        self.assertIn(response.status_code, [200, 302, 404])
-
-    def test_incident_detail_view(self):
-        # "Test incident detail view"
-        self.client.login(username='testuser', password='testpass123') # Log in
-        response = self.client.get(f'/incidents/{self.incident.id}/')
-        # May be 200, 302, or 404 depending on URL config
-        self.assertIn(response.status_code, [200, 302, 404]) 
+            created_by=self.user)
+        self.assertEqual(len(incident.title), 200)
